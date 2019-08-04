@@ -211,7 +211,17 @@
       type: git
       repository: git@github.com:&lt;yourusername&gt;/&lt;yourusername&gt;.github.io.git
       branch: master</code></pre><p>然后需要安装hexo-deployer-git模块<code>npm install hexo-deployer-git --save</code>（hexo-deployer-git是hexo的git管理组件，缺少该组件会报错，如<code>Deployer not found: github</code>）,<br>在完成创作后的hexo根目录下执行<code>hexo d(或deploy)</code>进行部署。完成部署后在浏览器中访问之前新建的域名即可也就是GitHub中的仓库名。</p>
-<h3 id="三-常用命令-1"><a href="#三-常用命令-1" class="headerlink" title="三.常用命令"></a>三.常用命令</h3><p>npm命令：<br>hexo命令：</p>
+<h3 id="三-常用命令-1"><a href="#三-常用命令-1" class="headerlink" title="三.常用命令"></a>三.常用命令</h3><p>npm命令：</p>
+<p>安装hexo<code>npm install -g hexo-cli</code></p>
+<p>安装hexo部署到GitHub的管理组件<code>npm install hexo-deployer-git --save</code></p>
+<p>hexo命令：</p>
+<p>初始化hexo网站：<code>hexo init [folder]</code></p>
+<p>自动构建hexo：<code>hexo generate</code>可选参数部署至网站<code>-d,--deploy</code>,监视文件变动<code>-w,--watch</code>,可简化为<code>hexo g</code></p>
+<p>新建文章hexo：<code>hexo new [layout] &lt;title&gt;</code>，可简化为<code>hexo n</code></p>
+<p>发布草稿：<code>hexo publish [layout] &lt;filename&gt;</code>，可简化为<code>hexo p</code></p>
+<p>本地启动服务器：<code>hexo server</code>可选参数重设端口<code>-p,--port</code>,只使用静态文件<code>-s,--static</code>,<code>-l,--log</code>,可简化为<code>hexo s</code></p>
+<p>部署网站：<code>hexo deploy</code>可选参数部署之前生成静态文件<code>-g,--generate</code>，可简化为<code>hexo d</code></p>
+<p>清理缓存及静态文件：<code>hexo clean</code></p>
 
       
 
