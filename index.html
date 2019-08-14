@@ -75,6 +75,8 @@
 	        
 				<li><a href="/tags/技术向/">技术向</a></li>
 	        
+				<li><a href="/tags/工具/">工具</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,11 +153,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 25%"><a href="/tags/随笔/">随笔</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/技术向/">技术向</a></li>
+					<li style="width: 25%"><a href="/tags/技术向/">技术向</a></li>
+		        
+					<li style="width: 25%"><a href="/tags/工具/">工具</a></li>
 		        
 				</ul>
 			</nav>
@@ -169,6 +175,130 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-OSX下的效率工具——Alfred" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/14/OSX下的效率工具——Alfred/">OSX下的效率工具——Alfred</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/14/OSX下的效率工具——Alfred/" class="archive-article-date">
+  	<time datetime="2019-08-14T06:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="OSX下的效率工具——Alfred"><a href="#OSX下的效率工具——Alfred" class="headerlink" title="OSX下的效率工具——Alfred"></a>OSX下的效率工具——Alfred</h1><h2 id="一-Alfred的安装"><a href="#一-Alfred的安装" class="headerlink" title="一.Alfred的安装"></a>一.Alfred的安装</h2><h2 id="二-基本设置"><a href="#二-基本设置" class="headerlink" title="二.基本设置"></a>二.基本设置</h2><h2 id="三-导入工作流"><a href="#三-导入工作流" class="headerlink" title="三.导入工作流"></a>三.导入工作流</h2><h3 id="一-Alfred的安装-1"><a href="#一-Alfred的安装-1" class="headerlink" title="一.Alfred的安装"></a>一.Alfred的安装</h3><p>Alfred是osx系统下的一个实用工具,安装非常简单,通过官网地址<a href>https://www.alfredapp.com/</a>可以下载安装最新版,双击下载好的dmg文件,将Alfred 4的图标拖入Applications中即可<br><img src="/.io//install.png" alt="安装"></p>
+<h3 id="二-基本设置-1"><a href="#二-基本设置-1" class="headerlink" title="二.基本设置"></a>二.基本设置</h3><p>安装完成后打开软件,右上角状态栏会出现Alfred的图标,单击图标选择Preferences进入偏好设置,总共有6个标签.<br>1.第一个是通用设置,可以选择是否随系统启动而启动,然后是设置热键,我是取消了spotlight的command+space然后设置为Alfred的热键,地区选择最好是选择China(有些工作流会受此影响).</p>
+<p>2.第二个是功能,我常用的是web search,calculator,clipboard,system和terminal/shell,web search是网页搜索,可以通过自带的工具比如谷歌,如果谷歌不能用,可以使用百度<br><img src="OSX%E4%B8%8B%E7%9A%84%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94Alfred//bd.png" alt="bd"><br>其他的我还用了一个maven中央仓库的搜索jar包的url<br><img src="/.io//mvn.png" alt="mvn">;calculator/clipboard/system我用的默认配置,因为这三个功能用的不如其他的频繁也就不做多余的设置了,terminal/shell我选择了自定义,因为我用的是iterm,然后在applescript的输入框里将下面的脚本复制进去即可:</p>
+<pre><code>-- This is v0.7 of the custom script for AlfredApp for iTerm 3.1.1+
+-- created by Sinan Eldem www.sinaneldem.com.tr
+
+on alfred_script(q)
+    if application &quot;iTerm2&quot; is running or application &quot;iTerm&quot; is    running then
+        run script &quot;
+            on run {q}
+                tell application \&quot;iTerm\&quot;
+                    activate
+                    try
+                        select first window
+                        set onlywindow to true
+                    on error
+                        create window with default profile
+                        select first window
+                        set onlywindow to true
+                    end try
+                    tell the first window
+                        if onlywindow is false then
+                            create tab with default profile
+                        end if
+                        tell current session to write text q
+                    end tell
+                end tell
+            end run
+        &quot; with parameters {q}
+    else
+        run script &quot;
+            on run {q}
+                tell application \&quot;iTerm\&quot;
+                    activate
+                    try
+                        select first window
+                    on error
+                        create window with default profile
+                        select first window
+                    end try
+                    tell the first window
+                        tell current session to write text q
+                    end tell
+                end tell
+            end run
+        &quot; with parameters {q}
+    end if
+end alfred_script</code></pre><h3 id="三-导入工作流-1"><a href="#三-导入工作流-1" class="headerlink" title="三.导入工作流"></a>三.导入工作流</h3><p>Alfred最好用的就是工作流了,网上有各种现成的工作流供下载,直接拖入或者按+按钮进行导入,我常用的几个是有道翻译(需要有道云的appsecret),百度地图,拷贝文件路径(copy path), dash(可在dash软件中引入),查看ip,查看http状态码对应的含义,根据自己偏好进行设置即可,也可以在原有的as/php脚本上进行修改.</p>
+
+      
+
+      
+      
+      
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/14/OSX下的效率工具——Alfred/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-how-to-use-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -580,6 +710,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">技术向</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
